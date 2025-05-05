@@ -1,0 +1,37 @@
+.wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.container {
+	max-width: 580px;
+	width: 100%;
+	box-shadow: 0 0 60px rgba(2, 2, 2, 0.07);
+	padding: 60px 40px;
+}
+
+.container input {
+	font-family: var(--font-dm-sans), sans-serif;
+	font-size: 16px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+	background-color: var(--gray-bg);
+	padding: .8rem 1.5rem;
+	width: 100%;
+	border-radius: 10px;
+	color: var(--semiblack-text);
+}
+
+.container input[type="checkbox"] {
+	accent-color: #fce9dd;
+	box-shadow: 0 0 0 2px #fce9dd;
+	box-shadow: unset;
+	width: 20px;
+	height: 20px;
+	border: 2px solid #fce9dd;
+	margin-bottom: 0;
+}
+
+.container input::placeholder {
+	color: var(--semiblack-text);
+}
