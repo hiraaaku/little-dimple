@@ -13,31 +13,28 @@ import { usePathname } from "next/navigation";
 
 // Define menu items
 const menuItems = [
-	{ name: "Home", path: "/" },
-	{ name: "Product", path: "/product" },
-	{ name: "Warranty", path: "/warranty" },
-	{ name: "Dimple Squad", path: "/dimple-squad" },
-	{ name: "Blog", path: "/blog" },
-	{ name: "Contact Us", path: "/contact" },
+	{ name: "Home", path: "/", key: "home" },
+	{ name: "Product", path: "/product", key: "product" },
+	{ name: "Warranty", path: "/warranty", key: "warranty" },
+	{ name: "Dimple Squad", path: "/dimple-squad", key: "dimple-squad" },
+	{ name: "Blog", path: "/blog", key: "blog" },
+	{ name: "Contact Us", path: "/contact", key: "contact" },
 ];
 
 export default function MainMenu() {
-	const [position, setPosition] = useState("home");
 	const pathname = usePathname();
+	const [position, setPosition] = useState(
+		menuItems.find((item) => pathname.includes(item.key)) || "",
+	);
 
 	// Update position based on pathname
 	useEffect(() => {
-		const currentItem = menuItems.find((item) =>
-			pathname.includes(item.path.slice(1)),
-		);
-		setPosition(currentItem ? currentItem.name.toLowerCase() : "home");
+		const currentItem = menuItems.find((item) => pathname.includes(item.key));
+		setPosition(currentItem ? currentItem.key : "home");
 	}, [pathname]);
 
 	return (
-		<div
-			className="w-full bg-white flex items-center justify-between"
-			style={{ boxShadow: "0 4px 9px rgba(0,0,0,0.25)" }}
-		>
+		<div className="w-full bg-white flex items-center justify-between shadow-[0_4px_9px_rgba(0,0,0,0.25)]">
 			<div className="max-w-[1440px] w-full mx-auto tracking-wide">
 				{/* Top Info Bar */}
 				<div className="font-(family-name:--font-dm-sans) text-white bg-(--hijau-tua) p-[5px] flex flex-wrap items-center justify-end gap-2 sm:gap-16 w-full px-2">
@@ -52,7 +49,12 @@ export default function MainMenu() {
 				<nav className="flex justify-between items-center px-2 flex-wrap gap-2">
 					{/* Logo */}
 					<div className="w-full sm:w-auto text-center">
-						<Image src={BrandLogo} alt="Brand Logo" width="150" className="mx-auto" />
+						<Image
+							src={BrandLogo}
+							alt="Brand Logo"
+							width="150"
+							className="mx-auto"
+						/>
 					</div>
 
 					{/* Menu Links */}
@@ -62,7 +64,7 @@ export default function MainMenu() {
 								key={item.path}
 								href={item.path}
 								className={`py-2 px-4 hover:text-black w-full sm:w-auto text-center ${
-									position === item.name.toLowerCase() ? "text-black" : ""
+									position === item.key ? "text-black" : ""
 								}`}
 							>
 								{item.name}
