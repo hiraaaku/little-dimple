@@ -1,0 +1,9 @@
+.link {
+    padding: .5rem 1.5rem;
+    border-radius: 1rem;
+    transition: all .3s ease-in-out;
+}
+
+.link:hover {
+    color: #000;
+}

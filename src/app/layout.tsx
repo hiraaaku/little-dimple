@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, DM_Sans } from "next/font/google";
 import '@fontsource/fredoka-one';
 import "./globals.css";
+import MainMenu from "@/shared/components/main-menu";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased`}
         style={{ fontFamily: 'Fredoka One, cursive' }}
       >
+        <MainMenu />
         {children}
       </body>
     </html>
