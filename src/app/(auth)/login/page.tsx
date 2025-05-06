@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 export const metadata = {
-    title: 'Login - Little Dimple',
-    description: 'Login Page of Litte Dimple',
-  };
+	title: "Login - Little Dimple",
+	description: "Login Page of Litte Dimple",
+};
 
 export default function LoginPage() {
 	return (
