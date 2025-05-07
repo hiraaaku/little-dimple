@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, DM_Sans } from "next/font/google";
 import '@fontsource/fredoka-one';
 import "./globals.css";
 import MainMenu from "@/shared/components/main-menu";
+import { Footer } from "@/features/footer";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -37,6 +38,7 @@ export default function RootLayout({
       >
         <MainMenu />
         {children}
+        <Footer />
       </body>
     </html>
   );
