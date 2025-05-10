@@ -1,218 +1,125 @@
 "use client"
 
-/* eslint-disable react/no-children-prop */
-import FieldInfo from "@/shared/components/field-info";
-import { useForm } from "@tanstack/react-form";
-import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, type LoginFormType } from "@/features/auth/schema";
+import { useLoginUser, useAuthGuard, useForgotPassword } from "@/features/auth/hooks";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { z } from "zod";
-
-const loginSchema = z.object({
-	email: z.string().email("Invalid email address").min(1, "Email is required"),
-	password: z.string(),
-	rememberMe: z.boolean().default(false)
-});
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type LoginFormType = z.infer<typeof loginSchema>;
+import { toast } from "sonner";
+import Link from "next/link";
+import type { SubmitHandler, Resolver } from "react-hook-form";
 
 export default function LoginPage() {
-	const router = useRouter();
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
+	const { loading } = useAuthGuard();
+	const loginMutation = useLoginUser();
+	const forgotPasswordMutation = useForgotPassword();
+	const [isRecovering, setIsRecovering] = useState(false);
 
-	const handleSubmit = async (values: LoginFormType) => {
-		try {
-			setIsLoading(true);
-			setError(null);
-
-			const response = await fetch('/api/auth/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email: values.email,
-					password: values.password,
-				}),
-			});
-
-			const data = await response.json();
-
-			if (!response.ok) {
-				throw new Error(data.message || 'Login failed');
-			}
-
-			// Handle remember me
-			if (values.rememberMe) {
-				localStorage.setItem('auth_token', data.token);
-				localStorage.setItem('user', JSON.stringify(data.user));
-			} else {
-				sessionStorage.setItem('auth_token', data.token);
-				sessionStorage.setItem('user', JSON.stringify(data.user));
-			}
-
-			// Redirect to dashboard or home
-			router.push('/');
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'An error occurred during login');
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	const form = useForm({
+	const form = useForm<LoginFormType>({
+		resolver: zodResolver(loginSchema) as Resolver<LoginFormType>,
 		defaultValues: {
-			email: '',
-			password: '',
+			email: "",
+			password: "",
 			rememberMe: false
-		},
-		onSubmit: async ({ value }) => {
-			await handleSubmit(value);
 		}
 	});
 
-	const handleForgotPassword = async () => {
-		if (!form.state.values.email) {
-			setError('Please enter your email address first');
-			return;
-		}
-
+	const onSubmit: SubmitHandler<LoginFormType> = async (data) => {
 		try {
-			setIsLoading(true);
-			setError(null);
-
-			const response = await fetch('/api/auth/forgot-password', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email: form.state.values.email,
-				}),
-			});
-
-			const data = await response.json();
-
-			if (!response.ok) {
-				throw new Error(data.message || 'Failed to send reset password email');
-			}
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'An error occurred');
-		} finally {
-			setIsLoading(false);
+			await loginMutation.mutateAsync(data);
+		} catch {
+			toast.error("Login failed. Please check your credentials.");
 		}
 	};
 
+	const handleForgotPassword = async () => {
+		const email = form.getValues("email");
+		if (!email) {
+			toast.error("Please enter your email address");
+			return;
+		}
+
+		setIsRecovering(true);
+		try {
+			await forgotPasswordMutation.mutateAsync(email);
+			toast.success("Password recovery instructions sent to your email");
+		} catch {
+			toast.error("Failed to send recovery email. Please try again.");
+		} finally {
+			setIsRecovering(false);
+		}
+	};
+
+	if (loading) {
+		return (
+			<div className="min-h-screen flex items-center justify-center">
+				<div className="w-8 h-8 border-4 border-green-800 border-t-transparent rounded-full animate-spin" />
+			</div>
+		);
+	}
+
 	return (
-		<>
-			{error && (
-				<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 font-(family-name:--font-dm-sans)" role="alert">
-					<span className="block sm:inline">{error}</span>
+		<form onSubmit={form.handleSubmit(onSubmit)}>
+			<div className="mb-[1.1rem]">
+				<input
+					type="email"
+					placeholder="Email Address*"
+					{...form.register("email")}
+					disabled={loginMutation.isPending}
+				/>
+				{form.formState.errors.email && (
+					<p className="text-red-500 font-(family-name:--font-dm-sans) text-sm p-2">
+						{form.formState.errors.email.message}
+					</p>
+				)}
+			</div>
+
+			<div className="mb-[1.1rem]">
+				<input
+					type="password"
+					placeholder="Password*"
+					{...form.register("password")}
+					disabled={loginMutation.isPending}
+				/>
+				{form.formState.errors.password && (
+					<p className="text-red-500 font-(family-name:--font-dm-sans) text-sm p-2">
+						{form.formState.errors.password.message}
+					</p>
+				)}
+			</div>
+
+			<div className="font-(family-name:--font-dm-sans) text-(--semiblack-text) flex items-center justify-between mb-[50px]">
+				<div className="flex items-center gap-2">
+					<input
+						type="checkbox"
+						{...form.register("rememberMe")}
+						disabled={loginMutation.isPending}
+					/>
+					<span>Remember Me?</span>
 				</div>
-			)}
-			<form
-				onSubmit={(e) => {
-					e.preventDefault();
-					e.stopPropagation();
-					void form.handleSubmit();
-				}}>
-				<div
-					className="mb-[1.1rem]">
-					<form.Field
-						name="email"
-						validators={{
-							onChange: ({ value }) => {
-								const result = loginSchema.shape.email.safeParse(value);
-								return result.success ? undefined : result.error.errors[0].message;
-							}
-						}}
-					>
-						{(field) => (
-							<>
-								<input
-									type="email"
-									placeholder="Email Address*"
-									value={field.state.value}
-									onChange={(e) => field.handleChange(e.target.value)}
-									disabled={isLoading}
-								/>
-								<FieldInfo field={field} />
-							</>
-						)}
-					</form.Field>
-				</div>
-				<div
-					className="mb-[1.1rem]">
-					<form.Field
-						name="password"
-						validators={{
-							onChange: ({ value }) => {
-								const result = loginSchema.shape.password.safeParse(value);
-								return result.success ? undefined : result.error.errors[0].message;
-							}
-						}}
-					>
-						{(field) => (
-							<>
-								<input
-									type="password"
-									placeholder="Password*"
-									value={field.state.value}
-									onChange={(e) => field.handleChange(e.target.value)}
-									disabled={isLoading}
-								/>
-								<FieldInfo field={field} />
-							</>
-						)}
-					</form.Field>
-				</div>
-				<div className="font-(family-name:--font-dm-sans) text-(--semiblack-text) flex items-center justify-between mb-[50px]">
-					<form.Field
-						name="rememberMe"
-					>
-						{(field) => (
-							<div className="flex items-center gap-2">
-								<input
-									type="checkbox"
-									checked={field.state.value}
-									onChange={(e) => field.handleChange(e.target.checked)}
-									disabled={isLoading}
-								/>
-								Remember Me?
-							</div>
-						)}
-					</form.Field>
-					<button
-						type="button"
-						className="transition hover:bg-(--orange-muda) hover:text-black rounded-lg px-2 -mx-2"
-						onClick={handleForgotPassword}
-						disabled={isLoading}
-					>
-						Forgot Password?
-					</button>
-				</div>
-				<div className="font-(family-name:--font-dm-sans) font-semibold">
-					<form.Subscribe
-						selector={(state) => [state.canSubmit, state.isSubmitting]}
-					>
-						{([canSubmit, isSubmitting]) => (
-							<button
-								type="submit"
-								className="bg-(--hijau-tua) text-white px-[50px] py-[14px] rounded-[12px] hover:underline transition disabled:opacity-50 disabled:cursor-not-allowed"
-								disabled={!canSubmit || isLoading}
-							>
-								{isSubmitting || isLoading ? "Please wait..." : "Login"}
-							</button>
-						)}
-					</form.Subscribe>
-					<span className="pl-5 pr-2">Or</span>
-					<Link href={"/register"} className="hover:underline transition">
-						Register Here
-					</Link>
-				</div>
-			</form>
-		</>
+				<button
+					type="button"
+					className="transition hover:bg-(--orange-muda) hover:text-black rounded-lg px-2 -mx-2"
+					onClick={handleForgotPassword}
+					disabled={isRecovering || loginMutation.isPending}
+				>
+					{isRecovering ? "Sending..." : "Forgot Password?"}
+				</button>
+			</div>
+
+			<div className="font-(family-name:--font-dm-sans) font-semibold">
+				<button
+					type="submit"
+					className="bg-(--hijau-tua) text-white px-[50px] py-[14px] rounded-[12px] hover:underline transition disabled:opacity-50 disabled:cursor-not-allowed"
+					disabled={loginMutation.isPending}
+				>
+					{loginMutation.isPending ? "Please wait..." : "Login"}
+				</button>
+				<span className="pl-5 pr-2">Or</span>
+				<Link href="/register" className="hover:underline transition">
+					Register Here
+				</Link>
+			</div>
+		</form>
 	);
 }

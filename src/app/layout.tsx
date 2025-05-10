@@ -4,6 +4,8 @@ import '@fontsource/fredoka-one';
 import "./globals.css";
 import MainMenu from "@/shared/components/main-menu";
 import { Footer } from "@/features/footer";
+import Providers from "./providers";
+import { Toaster } from "sonner";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -36,9 +38,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased`}
         style={{ fontFamily: 'Fredoka One, cursive' }}
       >
-        <MainMenu />
-        {children}
-        <Footer />
+        <Providers>
+          <MainMenu />
+          {children}
+          <Footer />
+          <Toaster richColors />
+        </Providers>
       </body>
     </html>
   );
