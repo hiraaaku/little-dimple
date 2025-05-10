@@ -6,10 +6,28 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import styles from "./auth.module.css";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/features/auth/context";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
+	const pathname = usePathname();
+	const { isAuthenticated, isLoading } = useAuth();
+	const router = useRouter();
 
-	const pathname = usePathname()
+	useEffect(() => {
+		if (!isLoading && isAuthenticated) {
+			router.push('/');
+		}
+	}, [isLoading, isAuthenticated, router]);
+
+	if (isLoading || isAuthenticated) {
+		return (
+			<div className="min-h-screen flex items-center justify-center">
+				<div className="w-8 h-8 border-4 border-green-800 border-t-transparent rounded-full animate-spin" />
+			</div>
+		);
+	}
 
 	return (
 		<div className="flex items-center justify-center py-10 px-5 my-10">

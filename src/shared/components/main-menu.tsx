@@ -23,14 +23,14 @@ const menuItems = [
 
 export default function MainMenu() {
 	const pathname = usePathname();
-	const [position, setPosition] = useState(
-		menuItems.find((item) => pathname.includes(item.key)) || "",
+	const [position, setPosition] = useState<string>(
+		menuItems.find((item) => pathname?.includes(item.key))?.key || "home"
 	);
 
 	// Update position based on pathname
 	useEffect(() => {
-		const currentItem = menuItems.find((item) => pathname.includes(item.key));
-		setPosition(currentItem ? currentItem.key : "home");
+		const currentItem = menuItems.find((item) => pathname?.includes(item.key));
+		setPosition(currentItem?.key || "home");
 	}, [pathname]);
 
 	return (

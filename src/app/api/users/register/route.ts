@@ -4,11 +4,17 @@ import { z } from 'zod';
 const registerSchema = z.object({
 	username: z.string().min(3, "Username must be at least 3 characters"),
 	email: z.string().email("Invalid email address").min(1, "Email is required"),
+	password: z.string().min(6, "Password must be at least 6 characters"),
+	full_name: z.string().min(1, "Full name is required"),
 	dob: z.string().min(1, "Date of birth is required"),
-	gender: z.enum(["male", "female"], {
-		required_error: "Please select a gender",
-	}),
+	phone: z.string().min(1, "Phone number is required"),
 	address: z.string().min(1, "Address is required"),
+	province_id: z.string().min(1, "Province ID is required"),
+	province_name: z.string().min(1, "Province name is required"),
+	city_id: z.string().min(1, "City ID is required"),
+	city_name: z.string().min(1, "City name is required"),
+	subdistrict_id: z.string().min(1, "Subdistrict ID is required"),
+	subdistrict_name: z.string().min(1, "Subdistrict name is required"),
 });
 
 // Dummy user storage (in a real app, this would be a database)
@@ -30,12 +36,12 @@ export async function POST(request: Request) {
 		// Simulate network delay
 		await new Promise(resolve => setTimeout(resolve, 1000));
 
-		// Check if user already exists
-		const existingUser = DUMMY_USERS.find(u => u.email === body.email || u.username === body.username);
+		// Check if email already exists
+		const existingUser = DUMMY_USERS.find(u => u.email === body.email);
 		if (existingUser) {
 			return NextResponse.json(
-				{ message: 'User with this email or username already exists' },
-				{ status: 409 }
+				{ message: 'Email already exists' },
+				{ status: 400 }
 			);
 		}
 
@@ -44,16 +50,16 @@ export async function POST(request: Request) {
 
 		// Success response
 		return NextResponse.json({
-			message: 'Registration successful',
+			message: 'User registered successfully',
 			user: {
 				username: body.username,
 				email: body.email,
+				full_name: body.full_name,
 			}
-		});
-	} catch (error) {
-		console.error('register error:', error);
+		}, { status: 201 });
+	} catch {
 		return NextResponse.json(
-			{ message: 'Internal server error' },
+			{ message: 'Server error' },
 			{ status: 500 }
 		);
 	}
