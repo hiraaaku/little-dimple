@@ -1,18 +1,26 @@
-import Image from "next/image"
 import Link from "next/link"
 export const ProductCard = ({
     image,
     title,
     price,
+    discountedPrice,
     rating,
     href,
-}: { image: string; title: string; price: string; rating: number; href: string }) => {
+}: { image: string; title: string; price: string; discountedPrice: string; rating: number; href: string }) => {
     return (
-        <div>
-            <Image src={image} alt={title} width={221} height={221} />
-            <h4>{title}</h4>
-            <p>{price}</p>
-            <div className="flex gap-1">
+        <div className="border border-[#FCE9DD] rounded-lg p-6 bg-white w-auto text-center">
+            <div className="w-full aspect-square rounded-[10px] overflow-hidden mb-6">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                    src={image} 
+                    alt={title} 
+                    className="h-full w-full object-cover" 
+                    loading="lazy" 
+                />
+            </div>
+            <h4 className="text-secondary text-[20px] mb-1">{title}</h4>
+            <p className="text-neutral-gray font-(family-name:--font-dm-sans) mb-1">${price} <span className="line-through">${discountedPrice}</span></p>
+            <div className="flex gap-1 items-center justify-center mb-6">
                 {[...Array(5)].map((_, index) => (
                     <svg
                         key={index}
@@ -24,9 +32,9 @@ export const ProductCard = ({
                     </svg>
                 ))}
             </div>
-            <div>
-                <Link href={href}>Check More</Link>
-                <button>Add to Cart</button>
+            <div className="flex justify-between items-center gap-2 font-(family-name:--font-dm-sans) text-[14px]">
+                <Link href={href} className="bg-neutral-white text-neutral-gray px-4 py-2 rounded-lg hover:bg-neutral-gray hover:text-neutral-white transition-all duration-300">Check More</Link>
+                <button className="bg-neutral-white text-neutral-gray px-4 py-2 rounded-lg hover:bg-neutral-gray hover:text-neutral-white transition-all duration-300">Add to Cart</button>
             </div>
         </div>
     )

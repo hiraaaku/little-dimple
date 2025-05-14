@@ -9,7 +9,7 @@ export default async function ProductLayout({
   }) {
 
     return(
-        <div className="max-w-[1440px] mx-auto grid grid-cols-4 gap-[26px] p-5 my-24">
+        <div className="max-w-[1280px] mx-auto grid grid-cols-4 gap-[26px] p-5 my-24">
             <div>
                 <SearchProduct />
                 <CategoryList />
