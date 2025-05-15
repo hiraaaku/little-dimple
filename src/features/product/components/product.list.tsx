@@ -6,9 +6,10 @@ import { useGetProducts } from "../hooks";
 import { Product } from "../types";
 import { ProductCard } from "./product.card";
 
-export const ProductList = ({ category = "all" }: { category?: string }) => {
+export const ProductList = ({ category = "all"}: { category?: string}) => {
     const params = useSearchParams();
     const sortBy = params?.get('sort_by') || 'all';
+    const searchParam = params?.get('search') || "";
     const [page, setPage] = useState(1);
     const [products, setProducts] = useState<Product[]>([]);
     const loaderRef = useRef<HTMLDivElement>(null);
@@ -18,6 +19,7 @@ export const ProductList = ({ category = "all" }: { category?: string }) => {
         category: category,
         page: page,
         limit: 10,
+        keyword: searchParam,
     });
 
     useEffect(() => {
@@ -25,6 +27,12 @@ export const ProductList = ({ category = "all" }: { category?: string }) => {
             setProducts(prev => [...prev, ...data.data]);
         }
     }, [data]);
+
+    // Reset products and page when search changes
+    useEffect(() => {
+        setProducts([]);
+        setPage(1);
+    }, [searchParam, category, sortBy]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
