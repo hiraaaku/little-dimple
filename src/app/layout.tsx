@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, DM_Sans } from "next/font/google";
+import { Geist, Geist_Mono, DM_Sans, Urbanist } from "next/font/google";
 import '@fontsource/fredoka-one';
 import "./globals.css";
 import QueryProvider from "@/providers/query-provider";
@@ -20,6 +20,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const urbanist = Urbanist({
+  variable: "--font-urbanist",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "Little Dimple",
   description: "Little Dimple - Your Trusted Baby Care Partner",
@@ -33,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} ${urbanist.variable} antialiased`}
         style={{ fontFamily: 'Fredoka One, cursive' }}>
         <QueryProvider>
           <AuthProvider>

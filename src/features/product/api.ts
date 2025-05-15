@@ -6,7 +6,7 @@ export const getProducts = async (params: {
     limit?: number;
 }) => {
     const { sort_by, category, keyword, page, limit } = params;
-    const url = new URL('/api/product', 'http://localhost:3000');
+    const url = new URL('/api/product', process.env.NEXT_PUBLIC_API_URL);
 
     if (sort_by) {
         url.searchParams.set('sort_by', sort_by);
@@ -28,6 +28,13 @@ export const getProducts = async (params: {
         url.searchParams.set('limit', limit.toString());
     }
 
+    const response = await fetch(url.toString());
+    const data = await response.json();
+    return data;
+};
+
+export const getProductDetail = async (id: string) => {
+    const url = new URL(`/api/product/${id}`, process.env.NEXT_PUBLIC_API_URL);
     const response = await fetch(url.toString());
     const data = await response.json();
     return data;

@@ -243,6 +243,9 @@ function generateMockProducts(count = 100) {
 // Generate a large mock dataset
 const MOCK_PRODUCTS = generateMockProducts(200);
 
+// Export the MOCK_PRODUCTS for use in other files
+export { MOCK_PRODUCTS };
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);

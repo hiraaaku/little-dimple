@@ -11,6 +11,10 @@
   --gray-bg: #FAF5F2;
   --semiblack-text: #7E8185;
   --orange-muda: #fce9dd;
+  --tertiary-gray: #E4E4E4;
+  --primary-hijau: #26A6A1;
+  --primary-ungu: #CBADD2;
+  --neutral-1: #FAF5F2;
 }
 
 @theme inline {
@@ -20,6 +24,12 @@
   --color-neutral-gray: #7E8185;
   --color-neutral-white: #FAF5F2;
   --color-secondary: #86CCCB;
+  --color-tertiary-gray: var(--tertiary-gray);
+  --color-hijau-tua: var(--hijau-tua);
+  --color-hijau-muda: var(--hijau-muda);
+  --color-primary-hijau: var(--primary-hijau);
+  --color-primary-ungu: var(--primary-ungu);
+  --color-neutral-1: var(--neutral-1);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getProducts } from "./api";
+import { getProductDetail, getProducts } from "./api";
 
 export const useGetProducts = (params: {
     sort_by?: string;
@@ -11,5 +11,12 @@ export const useGetProducts = (params: {
     return useQuery({
         queryKey: ['products', params],
         queryFn: () => getProducts(params),
+    });
+};
+
+export const useGetProductDetail = (id: string) => {
+    return useQuery({
+        queryKey: ['product', id],
+        queryFn: () => getProductDetail(id),
     });
 };
