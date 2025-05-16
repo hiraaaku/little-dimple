@@ -39,3 +39,10 @@ export const getProductDetail = async (id: string) => {
     const data = await response.json();
     return data;
 };
+
+export const getProductReviews = async (id: string) => {
+    const url = new URL(`/api/product-review/${id}`, process.env.NEXT_PUBLIC_API_URL);
+    const response = await fetch(url.toString());
+    const data = await response.json();
+    return data;
+};

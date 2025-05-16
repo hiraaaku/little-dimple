@@ -3,6 +3,8 @@ import Image from "next/image";
 import { useGetProductDetail } from "../hooks";
 import { useRef } from "react";
 import Share from "@/assets/images/link-chain.png"
+import { HTMLViewer } from "@/shared/components/html-viewer";
+import { ProductDetailReviews } from "./product.detail.reviews";
 
 export const ProductDetail = ({ slug }: { slug: string }) => {
     const inputRef = useRef<HTMLInputElement>(null);
@@ -32,6 +34,7 @@ export const ProductDetail = ({ slug }: { slug: string }) => {
     const shareUrls = generateShareUrls();
 
     return (
+        <div>
         <div className="grid grid-cols-2 gap-[30px]">
             <div className="w-full aspect-square rounded-[10px] overflow-hidden mb-6 bg-neutral-gray">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -157,6 +160,17 @@ export const ProductDetail = ({ slug }: { slug: string }) => {
                     </div>
                 </div>
             </div>
+        </div>
+        <div className="my-[30px] pb-[30px] border-b border-tertiary-gray">
+            <div className="text-[30px] mb-[15px]">
+                <h5 className="text-hijau-tua inline-block mr-[30px]">Description</h5>
+                <span className="text-hijau-muda inline-block">More Information</span>
+            </div>
+            <div>
+                <HTMLViewer content={data.description} />
+            </div>
+        </div>
+        <ProductDetailReviews id={slug} />
         </div>
     )
 }

@@ -18,3 +18,14 @@ export type Product = {
     label_1: string;
     label_2: string;
 };
+
+export type ProductReview = {
+    id: string;
+    review: string;
+    rating: number;
+    user: {
+        name: string;
+        avatar: string;
+    };
+    createdAt: string;
+};

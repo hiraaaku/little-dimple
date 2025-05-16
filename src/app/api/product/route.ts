@@ -15,7 +15,7 @@ const PRODUCT_TEMPLATES = [
       { title: "Side View", link: "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=500&auto=format&fit=crop&q=60", is_main: false },
       { title: "In Use", link: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500&auto=format&fit=crop&q=60", is_main: false }
     ],
-    description: "Experience the ultimate smartphone with cutting-edge technology, premium design, and exceptional performance.",
+    description: "<h2>Experience the Ultimate Smartphone</h2><p>Experience the ultimate smartphone with <strong>cutting-edge technology</strong>, premium design, and exceptional performance.</p><ul><li>Advanced 5G connectivity</li><li>Professional-grade camera system</li><li>All-day battery life</li><li>Premium build quality</li></ul>",
     more_info: "Features include 5G connectivity, advanced camera system, and all-day battery life.",
     media_more_info: "/videos/phone-demo.mp4",
     category: "electronic",
@@ -38,7 +38,7 @@ const PRODUCT_TEMPLATES = [
       { title: "Packaging", link: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=500&auto=format&fit=crop&q=60", is_main: false },
       { title: "Color Options", link: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500&auto=format&fit=crop&q=60", is_main: false }
     ],
-    description: "Immerse yourself in crystal-clear audio with advanced noise cancellation technology.",
+    description: "<h2>Premium Audio Experience</h2><p>Immerse yourself in <em>crystal-clear audio</em> with advanced noise cancellation technology.</p><div class='features'><h3>Key Features:</h3><ul><li>Active Noise Cancellation</li><li>30-hour battery life</li><li>Quick charge capability</li><li>Premium comfort padding</li></ul></div>",
     more_info: "Battery life up to 30 hours, quick charge feature, and premium comfort padding.",
     media_more_info: "/videos/headphones-review.mp4",
     category: "electronic",
@@ -61,7 +61,7 @@ const PRODUCT_TEMPLATES = [
       { title: "Fabric Detail", link: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500&auto=format&fit=crop&q=60", is_main: false },
       { title: "Model Wearing", link: "https://images.unsplash.com/photo-1503341733017-1901578f9f1e?w=500&auto=format&fit=crop&q=60", is_main: false }
     ],
-    description: "Soft, breathable, and sustainable cotton t-shirt perfect for everyday wear.",
+    description: "<h2>Sustainable Comfort</h2><p>Soft, breathable, and <strong>sustainable</strong> cotton t-shirt perfect for everyday wear.</p><div class='product-details'><h3>Product Details:</h3><ul><li>100% Organic Cotton</li><li>Machine Washable</li><li>Fade Resistant</li><li>Available in Multiple Sizes</li></ul></div>",
     more_info: "Available in various colors and sizes. Machine washable and fade-resistant.",
     media_more_info: "/images/tshirt-care-guide.jpg",
     category: "newborn_essentials",
@@ -84,7 +84,7 @@ const PRODUCT_TEMPLATES = [
       { title: "Ports View", link: "https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?w=500&auto=format&fit=crop&q=60", is_main: false },
       { title: "Gaming Setup", link: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?w=500&auto=format&fit=crop&q=60", is_main: false }
     ],
-    description: "Unleash your gaming potential with this powerful laptop featuring latest generation processors and graphics.",
+    description: "<h2>Ultimate Gaming Performance</h2><p>Unleash your gaming potential with this <strong>powerful laptop</strong> featuring latest generation processors and graphics.</p><div class='specs'><h3>Technical Specifications:</h3><ul><li>16GB RAM</li><li>1TB SSD Storage</li><li>144Hz Display</li><li>RGB Keyboard</li><li>Advanced Cooling System</li></ul></div>",
     more_info: "16GB RAM, 1TB SSD, 144Hz display, RGB keyboard, advanced cooling system.",
     media_more_info: "/videos/gaming-performance.mp4",
     category: "electronic",
@@ -107,7 +107,7 @@ const PRODUCT_TEMPLATES = [
       { title: "Rolled Up", link: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&auto=format&fit=crop&q=60", is_main: false },
       { title: "In Use", link: "https://images.unsplash.com/photo-1508050249562-b28a87a39e07?w=500&auto=format&fit=crop&q=60", is_main: false }
     ],
-    description: "Professional-grade yoga mat with superior grip and cushioning for all practice levels.",
+    description: "<h2>Professional Yoga Experience</h2><p>Professional-grade yoga mat with <em>superior grip</em> and cushioning for all practice levels.</p><div class='features'><h3>Product Features:</h3><ul><li>6mm Thickness</li><li>Eco-friendly Materials</li><li>Includes Carrying Strap</li><li>Includes Mat Bag</li><li>Non-slip Surface</li></ul></div>",
     more_info: "6mm thickness, eco-friendly materials, includes carrying strap and mat bag.",
     media_more_info: "/videos/yoga-mat-guide.mp4",
     category: "non-electronic",
@@ -130,7 +130,7 @@ const PRODUCT_TEMPLATES = [
       { title: "App Interface", link: "https://images.unsplash.com/photo-1510878933023-e2e2e3942fb0?w=500&auto=format&fit=crop&q=60", is_main: false },
       { title: "Charging", link: "https://images.unsplash.com/photo-1544117519-31a4a57314b3?w=500&auto=format&fit=crop&q=60", is_main: false }
     ],
-    description: "Monitor your health and fitness goals with this advanced wearable tracker.",
+    description: "<h2>Smart Health Companion</h2><p>Monitor your health and fitness goals with this <strong>advanced wearable tracker</strong>.</p><div class='features'><h3>Key Features:</h3><ul><li>Heart Rate Monitoring</li><li>Sleep Tracking</li><li>GPS Navigation</li><li>Water Resistant (50m)</li><li>Long Battery Life</li></ul></div>",
     more_info: "Heart rate monitoring, sleep tracking, GPS, water-resistant up to 50m.",
     media_more_info: "/videos/tracker-features.mp4",
     category: "electronic",
@@ -153,7 +153,7 @@ const PRODUCT_TEMPLATES = [
       { title: "Control Panel", link: "https://images.unsplash.com/photo-1606791405792-1004f1718d0c?w=500&auto=format&fit=crop&q=60", is_main: false },
       { title: "In Use", link: "https://images.unsplash.com/photo-1574914629385-46b1d2633c5c?w=500&auto=format&fit=crop&q=60", is_main: false }
     ],
-    description: "Brew barista-quality coffee at home with this premium automatic coffee machine.",
+    description: "<h2>Barista-Quality Coffee at Home</h2><p>Brew <em>barista-quality coffee</em> at home with this premium automatic coffee machine.</p><div class='features'><h3>Premium Features:</h3><ul><li>Built-in Grinder</li><li>Milk Frother</li><li>Programmable Settings</li><li>Easy Cleaning System</li><li>Multiple Brew Options</li></ul></div>",
     more_info: "Built-in grinder, milk frother, programmable settings, and easy cleaning system.",
     media_more_info: "/videos/coffee-maker-guide.mp4",
     category: "cooker",
@@ -176,7 +176,7 @@ const PRODUCT_TEMPLATES = [
       { title: "Detail View", link: "https://images.unsplash.com/photo-1591561954555-607968c989ab?w=500&auto=format&fit=crop&q=60", is_main: false },
       { title: "Styling", link: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&auto=format&fit=crop&q=60", is_main: false }
     ],
-    description: "Exquisite craftsmanship in this genuine leather designer handbag with signature detailing.",
+    description: "<h2>Luxury Craftsmanship</h2><p>Exquisite craftsmanship in this <strong>genuine leather</strong> designer handbag with signature detailing.</p><div class='features'><h3>Premium Details:</h3><ul><li>Handcrafted Design</li><li>Genuine Leather</li><li>Signature Hardware</li><li>Includes Dust Bag</li><li>Limited Edition</li></ul></div>",
     more_info: "Handcrafted, genuine leather, signature hardware, dust bag included.",
     media_more_info: "/images/handbag-care-guide.jpg",
     category: "cups_bottles",
