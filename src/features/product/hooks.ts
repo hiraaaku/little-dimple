@@ -21,9 +21,12 @@ export const useGetProductDetail = (id: string) => {
     });
 };
 
-export const useGetProductReviews = (id: string) => {
+export const useGetProductReviews = (id: string, params?: {
+    page?: number;
+    limit?: number;
+}) => {
     return useQuery({
-        queryKey: ['product-reviews', id],
-        queryFn: () => getProductReviews(id),
+        queryKey: ['product-reviews', id, params],
+        queryFn: () => getProductReviews(id, params),
     });
 };

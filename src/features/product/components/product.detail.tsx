@@ -6,6 +6,7 @@ import Share from "@/assets/images/link-chain.png"
 import { HTMLViewer } from "@/shared/components/html-viewer";
 import { ProductDetailReviews } from "./product.detail.reviews";
 import { DetailBreadcrumb } from "./detail.breadcrumb";
+import { ProductPhotosSlider } from "./product.photos.slider";
 
 export const ProductDetail = ({ slug }: { slug: string }) => {
     const [moreInfo, setMoreInfo] = useState(false);
@@ -42,14 +43,14 @@ export const ProductDetail = ({ slug }: { slug: string }) => {
     return (
         <div>
             <DetailBreadcrumb category={data.category} product={data.name} />
-            <div className="grid grid-cols-2 gap-[30px]">
+            <div className="grid sm:grid-cols-2 gap-[30px]">
                 <div className="w-full aspect-square rounded-[10px] overflow-hidden mb-6 bg-neutral-gray">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={data.photos[0].link} alt={data.name} className="h-full w-full object-cover font-(family-name:--font-dm-sans)" loading="lazy" />
+
+                    <ProductPhotosSlider images={data.photos} />
                 </div>
                 <div className="flex flex-col gap-4">
-                    <div className="mb-[10px] border-b border-[#E4E4E4] pb-[26px]">
-                        <div className="flex flex-row gap-2">
+                    <div className="px-5 sm:px-0 mb-[10px] border-b border-[#E4E4E4] pb-[26px]">
+                        <div className="flex flex-row flex-wrap gap-2">
                             <h2 className="grow text-[30px] text-(--hijau-tua)">{data.name}</h2>
                             <div className="flex flex-col gap-1 text-[32px] text-primary font-(family-name:--font-urbanist) font-bold">
                                 {data.price_after_discount && <p>${data.price_after_discount}</p>}
@@ -71,7 +72,7 @@ export const ProductDetail = ({ slug }: { slug: string }) => {
                     </div>
                     <p className="font-(family-name:--font-dm-sans) text-neutral-gray">{data.text_summary}</p>
                     <p className="font-(family-name:--font-dm-sans) text-primary mb-[30px]">In Stock: {data.stock}</p>
-                    <div className="flex flex-row items-center gap-5 mb-5">
+                    <div className="flex flex-row flex-wrap items-center gap-5 mb-5 px-5 sm:px-0">
                         <span className="text-hijau-tua text-[18px]">Quantity</span>
                         <div className="text-hijau-tua flex flex-row gap-2 border border-tertiary-gray rounded-xl font-[16px] font-(family-name:--font-dm-sans)">
                             <div className="border-r border-tertiary-gray">
@@ -109,15 +110,14 @@ export const ProductDetail = ({ slug }: { slug: string }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-row gap-5 font-(family-name:--font-dm-sans) font-bold">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-5 font-(family-name:--font-dm-sans) font-bold">
                         <button className="w-auto bg-primary-ungu text-white py-3 px-10 rounded-xl hover:bg-primary-ungu/80">Add to Cart</button>
                         <button className="w-auto bg-primary-hijau text-white py-3 px-10 rounded-xl hover:bg-primary-hijau/80">Buy Now</button>
                     </div>
-                    <div className="mt-6 flex flex-row gap-10">
+                    <div className="mt-6 flex flex-row flex-wrap px-5 sm:px-0 gap-10">
                         <div className="flex flex-row gap-2 items-center">
                             <span className="block font-(family-name:--font-dm-sans) text-hijau-tua font-medium">Share with friend</span>
                             <Image src={Share} width={24} height={24} alt="share" />
-
                         </div>
                         <div className="flex flex-row gap-4">
                             <a
@@ -173,7 +173,7 @@ export const ProductDetail = ({ slug }: { slug: string }) => {
                     <button className={`inline-block mr-[30px] ${moreInfo ? 'text-hijau-muda hover:underline' : 'text-hijau-tua'}`} onClick={() => setMoreInfo(false)}>Description</button>
                     <button className={`inline-block ${moreInfo ? 'text-hijau-tua' : 'text-hijau-muda hover:underline'}`} onClick={() => setMoreInfo(true)}>More Information</button>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-4 flex-col sm:flex-row">
                     <HTMLViewer className="grow" content={moreInfo ? data.more_info : data.description} />
                     {moreInfo && (
                         <video

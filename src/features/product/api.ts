@@ -40,8 +40,20 @@ export const getProductDetail = async (id: string) => {
     return data;
 };
 
-export const getProductReviews = async (id: string) => {
+export const getProductReviews = async (id: string, params?: {
+    page?: number;
+    limit?: number;
+}) => {
     const url = new URL(`/api/product-review/${id}`, process.env.NEXT_PUBLIC_API_URL);
+    
+    if (params?.page) {
+        url.searchParams.set('page', params.page.toString());
+    }
+
+    if (params?.limit) {
+        url.searchParams.set('limit', params.limit.toString());
+    }
+
     const response = await fetch(url.toString());
     const data = await response.json();
     return data;
