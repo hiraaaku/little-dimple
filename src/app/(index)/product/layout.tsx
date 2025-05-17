@@ -2,6 +2,11 @@ import { SearchProduct } from "@/features/product/components/search.product";
 import { CategoryList } from "@/features/product/components/category.list";
 import { SortListSelect } from "@/features/product/components/sort.list.select";
 
+export const metadata = {
+    title: 'Products - Little Dimple`',
+    description: 'Products',
+}
+
 export default async function ProductLayout({
     children,
   }: {

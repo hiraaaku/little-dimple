@@ -16,7 +16,6 @@ export const ProductDetailReviews = ({ id }: { id: string }) => {
     }
 
     if (isError) {
-        console.log('daa', isError);
         return <div>Error...</div>;
     }
 

@@ -13,7 +13,7 @@ export const DetailBreadcrumb = ({ category, product }: { category: string, prod
             <div className="flex flex-wrap items-center gap-2">
                 <Link href="/product" className="capitalize hover:underline">Product</Link>
                 <span className="mx-2">&gt;</span>
-                <Link href="/product" className="capitalize hover:underline">{category.replace(/[-_]/g, ' ')}</Link>
+                <Link href={`/product/category/${category}`} className="capitalize hover:underline">{category.replace(/[-_]/g, ' ')}</Link>
                 <span className="mx-2">&gt;</span>
                 <Link href={`product/detail/${product}`} className="capitalize hover:underline">{product}</Link>
             </div>
