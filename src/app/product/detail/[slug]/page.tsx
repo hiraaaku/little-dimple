@@ -4,7 +4,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     const { slug } = await params;
 
     return (
-        <div className="max-w-[1280px] mx-auto p-5 my-24">
+        <div className="max-w-[1280px] mx-auto p-5 mb-24">
             <ProductDetail slug={slug} />
         </div>
     )
