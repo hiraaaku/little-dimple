@@ -46,11 +46,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} ${urbanist.variable} ${schoolbell.variable} antialiased`}
         style={{ fontFamily: 'Fredoka One, cursive' }}>
-        <QueryProvider>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
-        </QueryProvider>
+          <QueryProvider>
+            <AuthProvider>
+              {children}
+            </AuthProvider>
+          </QueryProvider>
       </body>
     </html>
   );

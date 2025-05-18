@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState, type ReactNode } from 'react';
 import { Toaster } from 'sonner';
+import { PopSlideProvider } from './popslide-provider';
 
 export default function QueryProvider({ children }: { children: ReactNode }) {
   const [queryClient] = useState(
@@ -23,9 +24,11 @@ export default function QueryProvider({ children }: { children: ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <MainMenu />
-      {children}
-      <Footer />
+      <PopSlideProvider>
+        <MainMenu />
+        {children}
+        <Footer />
+      </PopSlideProvider>
       <Toaster richColors />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

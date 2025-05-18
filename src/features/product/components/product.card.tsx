@@ -1,4 +1,7 @@
 import Link from "next/link"
+import { toast } from "sonner";
+import { useAddToCart } from "@/features/cart/hooks";
+
 export const ProductCard = ({
     image,
     title,
@@ -7,6 +10,16 @@ export const ProductCard = ({
     rating,
     href,
 }: { image: string; title: string; price: string; discountedPrice: string; rating: number; href: string }) => {
+    
+    const { mutate: addToCart } = useAddToCart({
+        onSuccess: () => {
+            toast.success('Product added to cart successfully!');
+        },
+        onError: () => {
+            toast.error('Failed to add product to cart. Please try again.');
+        }
+    });
+    
     return (
         <div className="flex justify-between items-center flex-col border border-[#FCE9DD] rounded-lg p-6 bg-white w-auto text-center">
             <div>
@@ -36,7 +49,12 @@ export const ProductCard = ({
             </div>
             <div className="flex justify-between items-center gap-2 font-(family-name:--font-dm-sans) text-[14px]">
                 <Link href={href} className="bg-neutral-white text-neutral-gray px-4 py-2 rounded-lg hover:bg-neutral-gray hover:text-neutral-white transition-all duration-300">Check More</Link>
-                <button className="bg-neutral-white text-neutral-gray px-4 py-2 rounded-lg hover:bg-neutral-gray hover:text-neutral-white transition-all duration-300">Add to Cart</button>
+                <button
+                    className="bg-neutral-white text-neutral-gray px-4 py-2 rounded-lg hover:bg-neutral-gray hover:text-neutral-white transition-all duration-300"
+                    onClick={() => addToCart({ id: href, product_name: title, price: Number(price), quantity: 1, media_link: image })}
+                >
+                    Add to Cart
+                </button>
             </div>
         </div>
     )

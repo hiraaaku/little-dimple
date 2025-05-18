@@ -7,11 +7,22 @@ import { HTMLViewer } from "@/shared/components/html-viewer";
 import { ProductDetailReviews } from "./product.detail.reviews";
 import { DetailBreadcrumb } from "./detail.breadcrumb";
 import { ProductPhotosSlider } from "./product.photos.slider";
+import { useAddToCart } from "@/features/cart/hooks";
+import { toast } from "sonner";
+import { QuantityControl } from "./quantity.control";
 
 export const ProductDetail = ({ slug }: { slug: string }) => {
     const [moreInfo, setMoreInfo] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const { data, isLoading, error } = useGetProductDetail(slug);
+    const { mutate: addToCart } = useAddToCart({
+        onSuccess: () => {
+            toast.success('Product added to cart successfully!');
+        },
+        onError: () => {
+            toast.error('Failed to add product to cart. Please try again.');
+        }
+    });
 
     if (isLoading) {
         return <div>Loading...</div>
@@ -39,6 +50,24 @@ export const ProductDetail = ({ slug }: { slug: string }) => {
     };
 
     const shareUrls = generateShareUrls();
+
+    function addProductToCart(): void {
+        const quantity = Number(inputRef.current?.value || 1);
+        if (quantity < 1 || quantity > data.stock) {
+            toast.error("Invalid quantity");
+            return;
+        }
+
+        const cartItem = {
+            id: data.id,
+            product_name: data.name,
+            price: data.price,
+            quantity: quantity,
+            media_link: data.photos[0]
+        };
+
+        addToCart(cartItem);
+    }
 
     return (
         <div>
@@ -74,44 +103,13 @@ export const ProductDetail = ({ slug }: { slug: string }) => {
                     <p className="font-(family-name:--font-dm-sans) text-primary mb-[30px]">In Stock: {data.stock}</p>
                     <div className="flex flex-row flex-wrap items-center gap-5 mb-5 px-5 sm:px-0">
                         <span className="text-hijau-tua text-[18px]">Quantity</span>
-                        <div className="text-hijau-tua flex flex-row gap-2 border border-tertiary-gray rounded-xl font-[16px] font-(family-name:--font-dm-sans)">
-                            <div className="border-r border-tertiary-gray">
-                                <button
-                                    className="w-10 h-10 hover:bg-tertiary-gray rounded-l-xl m-px"
-                                    onClick={() => {
-                                        const currentVal = Number(inputRef.current?.value || 0);
-                                        if (inputRef.current) {
-                                            inputRef.current.value = Math.max(1, currentVal - 1).toString();
-                                        }
-                                    }}
-                                >
-                                    -
-                                </button>
-                            </div>
-                            <input
-                                type="number"
-                                className="w-auto h-10 text-center max-w-[100px] font-bold"
-                                ref={inputRef}
-                                defaultValue="1"
-                                min="1"
-                            />
-                            <div className="border-l border-tertiary-gray">
-                                <button
-                                    className="w-10 h-10 hover:bg-tertiary-gray rounded-r-xl m-px"
-                                    onClick={() => {
-                                        const currentVal = Number(inputRef.current?.value || 0);
-                                        if (inputRef.current) {
-                                            inputRef.current.value = (currentVal + 1).toString();
-                                        }
-                                    }}
-                                >
-                                    +
-                                </button>
-                            </div>
-                        </div>
+                        <QuantityControl ref={inputRef} />
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-5 font-(family-name:--font-dm-sans) font-bold">
-                        <button className="w-auto bg-primary-ungu text-white py-3 px-10 rounded-xl hover:bg-primary-ungu/80">Add to Cart</button>
+                        <button
+                            className="w-auto bg-primary-ungu text-white py-3 px-10 rounded-xl hover:bg-primary-ungu/80"
+                            onClick={addProductToCart}
+                        >Add to Cart</button>
                         <button className="w-auto bg-primary-hijau text-white py-3 px-10 rounded-xl hover:bg-primary-hijau/80">Buy Now</button>
                     </div>
                     <div className="mt-6 flex flex-row flex-wrap px-5 sm:px-0 gap-10">

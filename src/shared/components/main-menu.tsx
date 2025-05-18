@@ -10,6 +10,8 @@ import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { usePopSlide } from "@/providers/popslide-provider";
+import { CartPopup } from "@/features/cart/components/cart.popup";
 
 // Define menu items
 const menuItems = [
@@ -23,6 +25,7 @@ const menuItems = [
 
 export default function MainMenu() {
 	const pathname = usePathname();
+	const { openPopup } = usePopSlide();
 	const [position, setPosition] = useState<string>(
 		menuItems.find((item) => pathname?.includes(item.key))?.key || "home"
 	);
@@ -83,6 +86,7 @@ export default function MainMenu() {
 						<button
 							type="button"
 							className="p-5 hover:bg-(--hijau-muda) rounded-lg"
+							onClick={() => openPopup(<CartPopup />)}
 						>
 							<Image src={Cart} alt="cart button" height={20} />
 						</button>
